@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DBP最終レポート</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      p {
+        line-height: 1.6;
+        color: #666;
+      }
+      .code-block {
+        background-color: #f8f8f8;
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 20px 0;
+        overflow-x: auto;
+      }
+      .code-block code {
+        display: block;
+        white-space: pre-wrap;
+      }
+      video {
+        width: 80%; /* ビデオの幅を80%に設定 */
+        height: auto; /* 高さを自動調整 */
+        margin: 20px 0;
+        display: block; /* ブロック要素として表示 */
+        margin-left: auto; /* 左右中央揃え */
+        margin-right: auto;
+      }
+      .image-container {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .image-container img {
+        width: 100%;
+        max-width: 600px;
+        height: auto;
+        margin-bottom: 10px;
+      }
+      .image-caption {
+        color: #666;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>DBP最終レポート</h1>
+
+      <h2>22FI041 岸　幸之介</h2>
+      <h2>概要</h2>
+      <p>使用言語：HTML、CSS、Javascript、Java（JSP）、Postgres</p>
+      <h3>
+        説明：海外サッカーの有名なプレミアリーグという強いクラブチームが集まるリーグがあります。その選手（計550名程度）です。これらの選手情報をもとに自身で選手を更新したり、削除、検索、自身でオリジナルのチームの作成（ドラックアンドドロップ機能付き）を実現しました。
+        データが少ないためコーディングに大量の時間を割きましたため、高評価お願いします！！(o*。_。)oペコッ
+      </h3>
+
+      <h2>主な機能</h2>
+      <ul>
+        <li>選手の追加機能、削除機能、選手一覧</li>
+        <li>選手検索機能（絞り込み）</li>
+        <li>
+          オリジナルチーム制作→自身の好きな選手を20人まで選べる（ベンチメンバー含め）
+        </li>
+        <li>ドラックアンドドロップで自身の好きなメンバーを11人配置できる</li>
+      </ul>
+      <h2>設計方針</h2>
+      <a>
+        ★主にJSPを使用し、Tomcat10_Java17で起動しブラウザで表示させました。（周りの友人皆GUIだったので）localhost:8080/JavaWebdb/○○
+      </a>
+
+      <h2>➀データベースを2つ作成</h2>
+      <p>１：プレミアリーグの選手一覧→players</p>
+      <p>２：オリジナルチーム用→club_players</p>
+
+      <div class="image-container">
+        <p class="image-caption">データベース</p>
+        <img src="de.png" alt="Sample Image 7" />
+      </div>
+      <h2>
+        ➁今回は、サッカー選手のCSVを配布している
+        https://footystats.org/jp/download-stats-csv
+        →このサイトのCSVを取得し、PythonでCSVをPostgresに挿入
+      </h2>
+      <div class="image-container">
+        <p class="image-caption">PythonでCSVの挿入</p>
+        <img src="Python.png" alt="Sample Image 5" />
+      </div>
+      <h2>➂データベースをブラウザで表示</h2>
+      <li>ブラウザでHello Worldを表示（Tomacat10）</li>
+      <li>データベースの情報をブラウザで編集機能をつける</li>
+      <h2>➃ホーム画面の作成</h2>
+      <li>home.jspを作成</li>
+      <li>
+        ボタンを作成し、押したとき、その他の機能を持つJSPまたは、HTMLファイルに飛ぶようにする
+      </li>
+      <li>
+        選手追加ボタン、選手削除ボタン、選手一覧ボタン、選手検索ボタン、オリジナルチーム作成ボタン、オリジナルチーム選手一覧ボタンの実装
+      </li>
+      <h2>➄その他のJSP,HTMLファイル</h2>
+      <li>
+        選手の追加ボタン→insert.html（追加内容の入力、追加ボタン）/insert.jsp（追加確認）
+      </li>
+      <li>
+        選手削除ボタン→delete.jsp（削除する選手の検索機能、絞り込み）/deletesearch.jsp（絞り込み結果、選択チェックボックスの追加、削除ボタン）/deletePlayer.jsp（削除結果の表示）
+      </li>
+      <li>
+        選手一覧ボタン→address.jsp（すべての選手一覧）これから先に実装する（簡単）
+      </li>
+      <li>
+        選手検索ボタン→searcher.html(選手の絞り込み)/searcher.jsp(絞り込み結果)
+      </li>
+      <li>
+        オリジナルチームの作成ボタン→team.jsp(チームに追加したい選手の絞り込み)/search.jsp(絞り込み結果とチェックボックス機能、追加ボタン)/showClubPlayers.jsp(最強チームの選手情報を表示)
+      </li>
+      <li>
+        オリジナルチーム一覧→orijiteam.jsp（選んだ最強チームを使って実際にドラックアンドドロップをしてスターティングメンバーを指定する機能）
+      </li>
+      <h2>プログラムの説明</h2>
+
+      <h2>➀プルダウン機能の追加</h2>
+      <ul>
+        <h3>
+          選手を絞り込みで検索する際に、クラブチームと国籍をプルダウンで簡単に選択するようにした
+        </h3>
+        <li>
+          Class.forName(driverClassName);でJDBCドライバーをロードし、DriverManager.getConnection(url,
+          user, password);でPostgreSQLデータベースに接続。
+        </li>
+        <li>
+          connection.createStatement();でステートメントオブジェクトを作成し、statement.executeQuery(query);でSQLクエリを実行して結果セットを取得。
+        </li>
+        <li>
+          クエリ結果セットからクラブチーム名を取得し、optionタグとしてプルダウンメニューに追加します。この部分が動的に選択肢を生成するためのポイントです！
+        </li>
+        <li>
+          while
+          (resultSet.next())ループ内で、各クラブチーム名を取り出し、HTMLのoptionタグとして出力します。
+        </li>
+      </ul>
+      <div class="code-block">
+        <code>
+          &lt;label for="search_club"&gt;クラブチーム名:&lt;/label&gt;<br />
+          &lt;select id="search_club" name="search_club"&gt;<br />
+          &lt;option value=""&gt;-- クラブチームを選択 --&lt;/option&gt;<br />
+          &lt;%<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;String driverClassName =
+          "org.postgresql.Driver";<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;String url =
+          "jdbc:postgresql://localhost/soccer";<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;String user = "postgres";<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;String password = "○○";<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;Connection connection = null;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;Statement statement = null;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;ResultSet resultSet = null;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;try {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class.forName(driverClassName);<br />ここ！！！
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connection =
+          DriverManager.getConnection(url, user, password);<br />ここ！！
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statement =
+          connection.createStatement();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String query = "SELECT
+          DISTINCT current_club FROM players ORDER BY current_club";<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resultSet =
+          statement.executeQuery(query);<br />
+          ここ！！ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while
+          (resultSet.next()) {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String
+          club = resultSet.getString("current_club");<br />
+          %&gt;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&lt;option value="&lt;%= club %&gt;"&gt;&lt;%=
+          club %&gt;&lt;/option&gt;<br />
+          &lt;%<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;} catch (Exception e) {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;} finally {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if
+          (resultSet != null) resultSet.close();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if
+          (statement != null) statement.close();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if
+          (connection != null) connection.close();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (Exception e)
+          {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;}<br />
+          %&gt;<br />
+          &lt;/select&gt;
+        </code>
+      </div>
+
+      <h2>➁アニメーションの追加</h2>
+
+      <ul>
+        <li>CSSアニメーションを使用して背景画像を動かしました。</li>
+        <li>
+          この効果により、ユーザーがページを訪れた際に視覚的な楽しさを提供します。
+        </li>
+        <li>CSSのkeyframesを使い、画像の位置を変化させています。</li>
+      </ul>
+      <div class="code-block">
+        <code>
+          body {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;background-image: url('background.jpg');<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;background-size: cover;<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;animation: moveBackground 10s linear
+          infinite;<br />
+          }<br />
+          @keyframes moveBackground {<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;0% { background-position: 0 0; }<br />
+          &nbsp;&nbsp;&nbsp;&nbsp;100% { background-position: 100% 0; }<br />
+          }
+        </code>
+      </div>
+
+      <h2>➃ドラック&ドロップの実装</h2>
+      <p>
+        選手リストの各行に draggable="true"
+        を設定し、選手名をドラッグ可能に。ondragstart="drag(event)"
+        により、ドラッグイベントが開始された際に選手名を取得
+      </p>
+      <div class="image-container">
+        <p class="image-caption"></p>
+        <img src="V.png" alt="Sample Image 8" />
+      </div>
+
+      <h3>ポジション指定のドロップゾーン</h3>
+      <p>
+        各ポジションに対してドロップゾーンを設定し、選手名をドロップ可能に。ondrop="drop(event)"
+        と ondragover="allowDrop(event)"
+        により、ドロップイベントを許可し、選手名を表示
+      </p>
+      <div class="image-container">
+        <p class="image-caption"></p>
+        <img src="W.png" alt="Sample Image 8" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption"></p>
+        <img src="X.png" alt="Sample Image 8" />
+      </div>
+
+      <h2>実行結果</h2>
+      <div class="image-container">
+        <p class="image-caption">➀ホーム画面</p>
+        <img src="A.png" alt="Sample Image 8" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">➁選手を追加ボタン</p>
+        <li>ここで新しい選手を入力し、登録する</li>
+        <img src="B.png" alt="Sample Image 9" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">登録できた時の画面</p>
+        <img src="C.png" alt="Sample Image 10" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">一覧表示で選手情報</p>
+        <img src="D.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">遠藤航が追加されていることを確認</p>
+        <img src="E.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">➂選手を放出ボタン</p>
+        <img src="F.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">プルダウン機能の実装</p>
+        <li>データベースから情報を取得</li>
+        <img src="G.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">➃選手一覧ボタン</p>
+        <li>すべての選手の情報を取得</li>
+        <img src="H.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">➄選手検索ボタン</p>
+        <li>例えばゴールキーパーのGを入力して検索すると</li>
+        <img src="I.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">
+          ポジションがゴールキーパーのみで出力してくれる
+        </p>
+
+        <img src="J.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">➅オリジナルチーム作成ボタン</p>
+
+        <img src="K.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">ここで特定の選手を検索</p>
+
+        <img src="K.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">例として、遠藤航を選択して追加</p>
+
+        <img src="L.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">最強チームに追加されていることを確認</p>
+
+        <img src="M.png" alt="Sample Image 11" />
+      </div>
+
+      <div class="image-container">
+        <p class="image-caption">
+          選手がすでに登録済の場合、このように表示する
+        </p>
+
+        <img src="O.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">
+          ➆選手をドラック&ドロップで実際にポジションを指定してみよう（ドラック前）
+        </p>
+
+        <img src="P.png" alt="Sample Image 11" />
+      </div>
+      <div class="image-container">
+        <p class="image-caption">ドラック&ドロップ後</p>
+
+        <img src="Q.png" alt="Sample Image 11" />
+      </div>
+      <h3>考察</h3>
+      <li>フォルダ構成を機能ごとに分けるとより修正しやすくなる</li>
+      <li>
+        サッカーサイトのAPIを使用しようとしたが、エラーが出てしまい取得できなかった。（時間がなかった）
+      </li>
+      <li>UIやデータベースの取得方法を調べて実装できた</li>
+    </div>
+  </body>
+</html>
